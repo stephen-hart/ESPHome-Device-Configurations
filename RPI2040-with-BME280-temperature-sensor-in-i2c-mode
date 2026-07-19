@@ -1,0 +1,44 @@
+# Board: Raspberry Pi Pico W
+# Definition: definitions/boards/rpipicow/manifest.yaml
+
+esphome:
+  name: greenhouse-esphome-sensor
+  friendly_name: Greenhouse
+
+# Modern block replacing the old 'rp2040:' configuration
+rp2:
+  board: rpipicow       # Specifies Raspberry Pi Pico W
+  variant: rp2040       # Targets the RP2040-series chip
+
+logger:
+
+api:
+
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: Greenhouse-ESPH Fallback Hotspot
+
+captive_portal:
+
+# Configure the global I2C Bus using Pico GPIO pins
+i2c:
+  sda: GPIO0
+  scl: GPIO1
+  scan: true
+
+# Configure the BME280 Sensor
+sensor:
+  - platform: bme280_i2c     # Added _i2c to match the current ESPHome standard
+    temperature:
+      name: "BME280 Temperature"
+    pressure:
+      name: "BME280 Pressure"
+    humidity:
+      name: "BME280 Relative Humidity"
+    address: 0x76
+    update_interval: 60s
