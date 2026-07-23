@@ -1,4 +1,5 @@
-name: esphome-web-a27ba0
+esphome:
+  name: esphome-web-a27ba0
   friendly_name: ESPHome Kitchen BT Proxy
   min_version: 2026.4.0
   name_add_mac_suffix: false
@@ -23,10 +24,13 @@ logger:
 
 # Enable Home Assistant API
 api:
+  encryption:
+    key: !secret api_encryption_key
 
 # Allow Over-The-Air updates
 ota:
 - platform: esphome
+  password: !secret ota_password
 
 wifi:
   ssid: !secret wifi_ssid
